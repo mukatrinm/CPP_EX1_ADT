@@ -72,15 +72,14 @@ Result SetAdptArrayAt(PAdptArray adpt_arr, int index, PElement element) {
         adpt_arr->d_array[index] = adpt_arr->copyFunc(element);
     }
 
-    // printf("resizing array\n");
     Result result = ResizeArray(adpt_arr, index + 1);
     if (result == FAIL)
     {
         return FAIL;
     }
-    
-    adpt_arr->d_array[index] = adpt_arr->copyFunc(element);
-    // printf("updated value\n");
+    if (element) {
+        adpt_arr->d_array[index] = adpt_arr->copyFunc(element);
+    }
 
     return SUCCESS;
 }
