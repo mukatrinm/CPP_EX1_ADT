@@ -69,7 +69,9 @@ Result SetAdptArrayAt(PAdptArray adpt_arr, int index, PElement element) {
     if (index < adpt_arr->size)
     {
         free(adpt_arr->d_array[index]);
-        adpt_arr->d_array[index] = adpt_arr->copyFunc(element);
+        if (element)
+            adpt_arr->d_array[index] = adpt_arr->copyFunc(element);
+        return SUCCESS;
     }
 
     Result result = ResizeArray(adpt_arr, index + 1);
