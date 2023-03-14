@@ -66,17 +66,17 @@ PElement GetAdptArrayAt(PAdptArray adpt_arr, int index) {
 }
 
 Result SetAdptArrayAt(PAdptArray adpt_arr, int index, PElement element) {
-    if (index < adpt_arr->size)
-    {
-        free(adpt_arr->d_array[index]);
+    if (index < adpt_arr->size) {
+        if(adpt_arr->d_array[index])
+            adpt_arr->delFunc(adpt_arr->d_array[index]);
+
         if (element)
             adpt_arr->d_array[index] = adpt_arr->copyFunc(element);
         return SUCCESS;
     }
 
     Result result = ResizeArray(adpt_arr, index + 1);
-    if (result == FAIL)
-    {
+    if (result == FAIL) {
         return FAIL;
     }
     if (element) {
@@ -94,7 +94,6 @@ Result ResizeArray(PAdptArray adpt_arr, int new_size) {
     }
 
     memcpy(new_dynamic_array, adpt_arr->d_array, adpt_arr->size * sizeof(PElement));
-    // DeleteDArray(adpt_arr); // free old array
 
     adpt_arr->d_array = new_dynamic_array;
     adpt_arr->size = new_size;
@@ -119,20 +118,19 @@ void DeleteDArray(PAdptArray adpt_arr) {
         return;
     }
 
-    for (size_t i = 0; i < adpt_arr->size; i++)
-    {
+    for (size_t i = 0; i < adpt_arr->size; i++) {
         if (adpt_arr->d_array[i]) {
             adpt_arr->delFunc(adpt_arr->d_array[i]);
         // adpt_arr->d_array[i] = NULL; // TOOD: do i need this?
         }
     }
+
     free(adpt_arr->d_array);
     adpt_arr->d_array = NULL;
 } 
 
 void PrintDB(PAdptArray adpt_arr) {
-    for (size_t i = 0; i < adpt_arr->size; i++)
-    {
+    for (size_t i = 0; i < adpt_arr->size; i++) {
         if (adpt_arr->d_array[i])
             adpt_arr->printFunc(adpt_arr->d_array[i]);
     }
