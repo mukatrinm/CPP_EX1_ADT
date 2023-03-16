@@ -17,6 +17,14 @@ struct AdptArray_ {
     PRINT_FUNC printFunc;
 };
 
+/**
+ * @brief Create an empty Adpt Array object
+ * 
+ * @param copyFunc copy function
+ * @param delFunc delete function
+ * @param printFunc print function
+ * @return PAdptArray pointer to the adapter array if it was successfully created and initialized, NULL otherwise.
+ */
 PAdptArray CreateAdptArray(COPY_FUNC copyFunc, DEL_FUNC delFunc, PRINT_FUNC printFunc) {
     PAdptArray adptArray = (PAdptArray) malloc(sizeof(struct AdptArray_));
     if (adptArray == NULL) {
@@ -28,6 +36,14 @@ PAdptArray CreateAdptArray(COPY_FUNC copyFunc, DEL_FUNC delFunc, PRINT_FUNC prin
     return adptArray;
 }
 
+/**
+ * @brief Initialize an empty Adpt Array object
+ * 
+ * @param adpt_arr pointer to the adapter array
+ * @param copyFunc copy function
+ * @param delFunc delete function
+ * @param printFunc print function
+ */
 void InitAdptArray(PAdptArray adpt_arr, COPY_FUNC copyFunc, DEL_FUNC delFunc, PRINT_FUNC printFunc) {
     if (adpt_arr == NULL) {
         return;
@@ -41,7 +57,12 @@ void InitAdptArray(PAdptArray adpt_arr, COPY_FUNC copyFunc, DEL_FUNC delFunc, PR
     adpt_arr->printFunc = printFunc;
 }
 
-
+/**
+ * @brief Get the Adpt Array Size object
+ * 
+ * @param adpt_arr pointer to the adapter array
+ * @return amount of elements in the array, -1 if there are no elements.
+ */
 int GetAdptArraySize(PAdptArray adpt_arr) {
     if (adpt_arr == NULL)
         return -1;
@@ -49,6 +70,13 @@ int GetAdptArraySize(PAdptArray adpt_arr) {
     return adpt_arr->size;
 }
 
+/**
+ * @brief Get the Adpt Array At object
+ * 
+ * @param adpt_arr pointer to the adapter array
+ * @param index the index to get
+ * @return PElement copy of the element at the specified index, NULL if there's no element.
+ */
 PElement GetAdptArrayAt(PAdptArray adpt_arr, int index) {
     if (adpt_arr == NULL) {
         return NULL;
@@ -65,6 +93,14 @@ PElement GetAdptArrayAt(PAdptArray adpt_arr, int index) {
     return NULL;
 }
 
+/**
+ * @brief Set the Adpt Array At object
+ * 
+ * @param adpt_arr pointer to the adapter array
+ * @param index the index to set
+ * @param element the element to insert
+ * @return Result 
+ */
 Result SetAdptArrayAt(PAdptArray adpt_arr, int index, PElement element) {
     if (index < adpt_arr->size) {
         if(adpt_arr->d_array[index])
@@ -86,6 +122,13 @@ Result SetAdptArrayAt(PAdptArray adpt_arr, int index, PElement element) {
     return SUCCESS;
 }
 
+/**
+ * @brief resize the dynamic array
+ * 
+ * @param adpt_arr delete the elements in the adapter array.
+ * @param new_size the new size the dynamic array
+ * @return Result 
+ */
 Result ResizeArray(PAdptArray adpt_arr, int new_size) {
     PElement *new_dynamic_array = calloc(new_size, sizeof(PElement));
     if (new_dynamic_array == NULL) {
@@ -101,6 +144,11 @@ Result ResizeArray(PAdptArray adpt_arr, int new_size) {
     return SUCCESS;
 }
 
+/**
+ * @brief delete the adapter array.
+ * 
+ * @param adpt_arr pointer to the adapter array
+ */
 void DeleteAdptArray(PAdptArray adpt_arr) {
     if (adpt_arr == NULL) {
         return;
@@ -112,7 +160,11 @@ void DeleteAdptArray(PAdptArray adpt_arr) {
     adpt_arr = NULL;
 } 
 
-// free the dynamic array
+/**
+ * @brief delete the elements in the dynamic array.
+ * 
+ * @param adpt_arr pointer to the adapter array
+ */
 void DeleteDArray(PAdptArray adpt_arr) {
     if (adpt_arr->d_array == NULL) {
         return;
@@ -129,6 +181,11 @@ void DeleteDArray(PAdptArray adpt_arr) {
     adpt_arr->d_array = NULL;
 } 
 
+/**
+ * @brief print the elements in the dynamic array
+ * 
+ * @param adpt_arr pointer to the adapter array
+ */
 void PrintDB(PAdptArray adpt_arr) {
     for (size_t i = 0; i < adpt_arr->size; i++) {
         if (adpt_arr->d_array[i])
