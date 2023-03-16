@@ -135,11 +135,12 @@ Result ResizeArray(PAdptArray adpt_arr, int new_size) {
         printf("returning fail\n");
         return FAIL;
     }
-
+    PElement *temp =  adpt_arr->d_array;
     memcpy(new_dynamic_array, adpt_arr->d_array, adpt_arr->size * sizeof(PElement));
 
     adpt_arr->d_array = new_dynamic_array;
     adpt_arr->size = new_size;
+    free(temp);
 
     return SUCCESS;
 }
