@@ -102,7 +102,7 @@ PElement GetAdptArrayAt(PAdptArray adpt_arr, int index) {
  * @return Result 
  */
 Result SetAdptArrayAt(PAdptArray adpt_arr, int index, PElement element) {
-    if (index < 0)  return FAIL;
+    if (adpt_arr == NULL || index < 0)  return FAIL;
     if (index < adpt_arr->size) {
         if(adpt_arr->d_array[index])
             adpt_arr->delFunc(adpt_arr->d_array[index]);
@@ -168,7 +168,7 @@ void DeleteAdptArray(PAdptArray adpt_arr) {
  * @param adpt_arr pointer to the adapter array
  */
 void DeleteDArray(PAdptArray adpt_arr) {
-    if (adpt_arr->d_array == NULL) {
+    if (adpt_arr == NULL || adpt_arr->d_array == NULL) {
         return;
     }
 
@@ -178,7 +178,7 @@ void DeleteDArray(PAdptArray adpt_arr) {
         // adpt_arr->d_array[i] = NULL; // TOOD: do i need this?
         }
     }
-
+    adpt_arr->size = 0;
     free(adpt_arr->d_array);
     adpt_arr->d_array = NULL;
 } 
@@ -189,6 +189,8 @@ void DeleteDArray(PAdptArray adpt_arr) {
  * @param adpt_arr pointer to the adapter array
  */
 void PrintDB(PAdptArray adpt_arr) {
+    if(adpt_arr == NULL) return;
+
     for (size_t i = 0; i < adpt_arr->size; i++) {
         if (adpt_arr->d_array[i])
             adpt_arr->printFunc(adpt_arr->d_array[i]);
