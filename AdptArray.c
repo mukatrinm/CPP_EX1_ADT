@@ -78,7 +78,7 @@ int GetAdptArraySize(PAdptArray adpt_arr) {
  * @return PElement copy of the element at the specified index, NULL if there's no element.
  */
 PElement GetAdptArrayAt(PAdptArray adpt_arr, int index) {
-    if (adpt_arr == NULL) {
+    if (adpt_arr == NULL || index < 0) {
         return NULL;
     }
     
@@ -102,6 +102,7 @@ PElement GetAdptArrayAt(PAdptArray adpt_arr, int index) {
  * @return Result 
  */
 Result SetAdptArrayAt(PAdptArray adpt_arr, int index, PElement element) {
+    if (index < 0)  return FAIL;
     if (index < adpt_arr->size) {
         if(adpt_arr->d_array[index])
             adpt_arr->delFunc(adpt_arr->d_array[index]);
